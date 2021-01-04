@@ -2,40 +2,45 @@ import java.util.Arrays;
 
 public class InvasionProtocol {
 
-	private static final int[][] panelSolved = new int[5][5];
-	private final String[] input;
-	private final String[][] panel;
+	private final int[][] panelSolved;
+	private String solve;
 
-	public static void main(String[] args) {
+	public InvasionProtocol(String panel, String input) {
+		
+		int panelDimensions = getDimensions(getNumberValues(panel));
 
-		String[][] panel = {
-				{"55", "1C", "BD", "BD", "1C"},
-				{"BD", "1C", "55", "E9", "1C"},
-				{"55", "E9", "55", "55", "1C"},
-				{"BD", "BD", "1C", "BD", "BD"},
-				{"55", "1C", "1C", "55", "1C"}};
+		this.panelSolved = new int[panelDimensions][panelDimensions];
 
-		String[] input = {"E9", "1C", "1C", "1C", "E9"};
+		if (panelDimensions == 10){
 
-		InvasionProtocol panel5x5 = new InvasionProtocol(panel, input);
-	}
+			this.solve = "ERROR: The panel is incorrect";
+			return;
 
-	public InvasionProtocol(String[][] panel, String[] input) {
+		}else this.solve = "";
 
-		this.panel = panel;
-		this.input = input;
-		if (solve(this.panel, this.input, 0, 0, 0)) {
 
-			printSolve();
+		if (solve(decodePanel(panel), decodeInput(input), 0, 0, 0)) {
+
+			for (int[] ints : panelSolved) {
+
+				this.solve = this.solve.concat(Arrays.toString(ints)).concat("\n");
+
+			}
+			System.out.println(this.solve);
 
 		} else {
 
-			System.out.println("\u001B[31mERROR: The panel has no solution");
+			this.solve = "ERROR: The panel has no solution";
 
 		}
 	}
 
-	private static boolean solve(String[][] panel, String[] input, int x, int y, int index) {
+	public String getSolve() {
+
+		return this.solve;
+	}
+
+	private boolean solve(String[][] panel, String[] input, int x, int y, int index) {
 
 		if (index < input.length) {
 
@@ -100,12 +105,85 @@ public class InvasionProtocol {
 
 	}
 
-	private static void printSolve() {
+	private static String[][] decodePanel(String panel) {
+		
+		int panelDimensions = getDimensions(getNumberValues(panel));
+		int indexArray = 0;
 
-		for (int[] ints : panelSolved) {
+		String[][] _panel = new String[panelDimensions][panelDimensions];
 
-			System.out.println(Arrays.toString(ints));
+		for (int x = 0; x < _panel.length; x++) {
+
+			for (int y = 0; y < _panel[0].length; y++) {
+
+				_panel[x][y] = extractValue(panel, indexArray);
+				indexArray++;
+			}
+
 		}
+
+		return _panel;
+
+	}
+	
+	private static int getDimensions(int numberValues) {
+
+		int panelDimensions = 0;
+		
+		while (panelDimensions < 10 && panelDimensions * panelDimensions != numberValues) {
+
+			panelDimensions++;
+		}
+		
+		return panelDimensions;
+	}
+
+	private static int getNumberValues(String data) {
+
+		int numberValues = 1;
+
+		for (int i = 0; i < data.length(); i++) {
+
+			if (data.charAt(i) == ',') numberValues++;
+		}
+		return numberValues;
+	}
+
+	private static String[] decodeInput(String input) {
+
+
+		int numberValues = getNumberValues(input);
+
+		String[] _input = new String[numberValues];
+
+		for (int i = 0; i < numberValues; i++) {
+
+			_input[i] = extractValue(input, i);
+
+		}
+
+		return _input;
+
+	}
+
+	private static String extractValue(String data, int index) {
+
+		String value = "";
+		int cont = 0;
+		int firstIndex = 0;
+		int lastIndex;
+
+		while (cont != index + 1) {
+
+			lastIndex = data.indexOf(",", firstIndex);
+			if (lastIndex < firstIndex) {
+				value = data.substring(firstIndex);
+			} else value = data.substring(firstIndex, lastIndex);
+			firstIndex = lastIndex + 1;
+			cont++;
+		}
+
+		return value;
 	}
 
 }
