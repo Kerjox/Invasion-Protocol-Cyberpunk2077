@@ -5,32 +5,19 @@ public class InvasionProtocol {
 	private final int[][] panelSolved;
 	private String solve;
 
-	public static void main(String[] args) {
-
-		String _panel = "55,1C,BD,BD,1C,BD,1C,55,E9,1C,55,E9,55,55,1C,BD,BD,1C,BD,BD,55,1C,1C,55,1C";
-		//"BD,1C,1C,E9,BD,E9,1C,1C,E9,BD,1C,55,1C,BD,1C,E9,BD,E9,55,E9,55,55,E9,55,E9"
-		String _input = "E9,1C,1C,1C,E9";
-		InvasionProtocol i1 = new InvasionProtocol(_panel, _input);
-		//System.out.println(extractValue("55,1C,BD,BD,1C,BD,1C,55,E9,1C,55,E9,55,55,1C,BD,BD,1C,BD,BD,55,1C,1C,55,1C", 1));
-
-		/*
-		String[][] panel = {
-				{"55", "1C", "BD", "BD", "1C"},
-				{"BD", "1C", "55", "E9", "1C"},
-				{"55", "E9", "55", "55", "1C"},
-				{"BD", "BD", "1C", "BD", "BD"},
-				{"55", "1C", "1C", "55", "1C"}};
-
-		String[] input = {"E9", "1C", "1C", "1C", "E9"};
-		*/
-	}
-
 	public InvasionProtocol(String panel, String input) {
 		
 		int panelDimensions = getDimensions(getNumberValues(panel));
-		
+
 		this.panelSolved = new int[panelDimensions][panelDimensions];
-		this.solve = "";
+
+		if (panelDimensions == 10){
+
+			this.solve = "ERROR: The panel is incorrect";
+			return;
+
+		}else this.solve = "";
+
 
 		if (solve(decodePanel(panel), decodeInput(input), 0, 0, 0)) {
 
@@ -44,7 +31,6 @@ public class InvasionProtocol {
 		} else {
 
 			this.solve = "ERROR: The panel has no solution";
-			//System.out.println("\u001B[31mERROR: The panel has no solution");
 
 		}
 	}
@@ -119,14 +105,6 @@ public class InvasionProtocol {
 
 	}
 
-	private void printSolve() {
-
-		for (int[] ints : panelSolved) {
-
-			System.out.println(Arrays.toString(ints));
-		}
-	}
-
 	private static String[][] decodePanel(String panel) {
 		
 		int panelDimensions = getDimensions(getNumberValues(panel));
@@ -152,7 +130,7 @@ public class InvasionProtocol {
 
 		int panelDimensions = 0;
 		
-		while (panelDimensions * panelDimensions != numberValues) {
+		while (panelDimensions < 10 && panelDimensions * panelDimensions != numberValues) {
 
 			panelDimensions++;
 		}
