@@ -4,6 +4,14 @@ public class InvasionProtocol {
 
 	private final int[][] panelSolved;
 	private String solve;
+/*
+	public static void main(String[] args) {
+
+		String _panel = "BD,E9,55,7A,BD,E9,BD,55,E9,1C,BD,7A,BD,55,7A,7A,FF,55,1C,7A,1C,55,7A,E9,55,BD,BD,55,FF,55,7A,7A,7A,55,BD,55,55,E9,7A,FF,7A,7A,55,1C,E9,55,BD,7A,1C";
+		String a = "7A,7A,BD,BD,FF";
+		InvasionProtocol panel1 = new InvasionProtocol(_panel, a);
+
+	}*/
 
 	public InvasionProtocol(String panel, String input) {
 		
@@ -11,7 +19,7 @@ public class InvasionProtocol {
 
 		this.panelSolved = new int[panelDimensions][panelDimensions];
 
-		if (panelDimensions == 10){
+		if (panelDimensions == 10) {
 
 			this.solve = "ERROR: The panel is incorrect";
 			return;
@@ -71,7 +79,7 @@ public class InvasionProtocol {
 						return solve(panel, input, x, y + 1, index);
 					}
 
-				} else return x + 1 < panel.length && solve(panel, input, x + 1, 0, index);
+				} else return index == 0 && x + 1 < panel.length && solve(panel, input, x + 1, 0, index);
 
 			} else {
 

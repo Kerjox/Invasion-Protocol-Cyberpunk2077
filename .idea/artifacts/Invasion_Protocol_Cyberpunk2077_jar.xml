@@ -3,8 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Invasion_Protocol_Cyberpunk2077_jar</output-path>
     <root id="archive" name="Invasion-Protocol-Cyberpunk2077.jar">
       <element id="module-output" name="Invasion-Protocol-Cyberpunk2077" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jgoodies-forms-1.8.0/jgoodies-forms-1.8.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/jgoodies-common-1.8.1/jgoodies-common-1.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jgoodies-forms-1.8.0/jgoodies-forms-1.8.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
